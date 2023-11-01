@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 import { CommentsService } from './comments.service';
@@ -22,8 +23,12 @@ export class CommentsController {
   }
 
   @Get()
-  findAll() {
-    return this.commentsService.findAll();
+  findAll(@Query('path') path: string) {
+    if (path) {
+      return this.commentsService.findAllByPath(path);
+    } else {
+      return this.commentsService.findAll();
+    }
   }
 
   @Get(':id')

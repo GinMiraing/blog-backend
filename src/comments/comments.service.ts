@@ -30,8 +30,16 @@ export class CommentsService {
     return createdComment.save();
   }
 
+  async findAllByPath(path: string) {
+    const comments = await this.commentModel
+      .find({ path })
+      .sort({ _id: -1 })
+      .exec();
+    return comments;
+  }
+
   async findAll() {
-    const comments = await this.commentModel.find().exec();
+    const comments = await this.commentModel.find().sort({ _id: -1 }).exec();
     return comments;
   }
 
@@ -39,7 +47,7 @@ export class CommentsService {
     const comment = await this.commentModel.findById(id).exec();
 
     if (!comment) {
-      return new NotFoundException('评论未找到');
+      throw new NotFoundException('评论未找到');
     }
 
     return comment;
@@ -49,7 +57,7 @@ export class CommentsService {
     const comment = await this.commentModel.findById(id).exec();
 
     if (!comment) {
-      return new NotFoundException('评论未找到');
+      throw new NotFoundException('评论未找到');
     }
 
     await comment.updateOne(data);
@@ -64,7 +72,7 @@ export class CommentsService {
     const comment = await this.commentModel.findById(id).exec();
 
     if (!comment) {
-      return new NotFoundException('评论未找到');
+      throw new NotFoundException('评论未找到');
     }
 
     await comment.deleteOne();
