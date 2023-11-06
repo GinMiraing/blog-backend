@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthMiddleware } from 'src/auth/auth.middleware';
 import { CommentSchema } from 'src/comments/entities/comment.entity';
@@ -19,6 +24,9 @@ import { RepliesService } from './replies.service';
 })
 export class RepliesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes(RepliesController);
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: 'replies',
+      method: RequestMethod.POST,
+    });
   }
 }

@@ -7,12 +7,12 @@ export class AuthService {
     const timestamp = Date.now();
     const secretKey = process.env.SECRET_KEY || 'secretkey';
 
-    const secretToken = SHA256(timestamp + secretKey).toString();
+    const token = SHA256(`${timestamp}${secretKey}`).toString();
 
     const signature = btoa(
       JSON.stringify({
         timestamp,
-        token: secretToken,
+        token,
       }),
     );
 

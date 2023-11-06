@@ -30,14 +30,14 @@ export class AuthMiddleware implements NestMiddleware {
     };
 
     if (!timestamp || Date.now() - timestamp > 1 * 60 * 1000) {
-      throw new UnauthorizedException('非法请求');
+      throw new UnauthorizedException('请求签名已过期');
     }
 
     const secretKey = process.env.SECRET_KEY || 'secretkey';
-    const checkToken = SHA256(timestamp + secretKey).toString();
+    const checkToken = SHA256(`${timestamp}${secretKey}`).toString();
 
     if (token !== checkToken) {
-      throw new UnauthorizedException('非法请求');
+      throw new UnauthorizedException('请求签名错误');
     }
 
     next();
