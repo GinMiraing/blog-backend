@@ -33,18 +33,55 @@ export class CommentsService {
   async findAllByPath(path: string) {
     const comments = await this.commentModel
       .find({ path })
+      .select([
+        '_id',
+        'nick',
+        'email_md5',
+        'link',
+        'content',
+        'is_admin',
+        'is_hidden',
+        'reply',
+      ])
       .sort({ _id: -1 })
       .exec();
+
     return comments;
   }
 
   async findAll() {
-    const comments = await this.commentModel.find().sort({ _id: -1 }).exec();
+    const comments = await this.commentModel
+      .find()
+      .select([
+        '_id',
+        'nick',
+        'email_md5',
+        'link',
+        'content',
+        'is_admin',
+        'is_hidden',
+        'reply',
+      ])
+      .sort({ _id: -1 })
+      .exec();
+
     return comments;
   }
 
   async findOne(id: number) {
-    const comment = await this.commentModel.findById(id).exec();
+    const comment = await this.commentModel
+      .findById(id)
+      .select([
+        '_id',
+        'nick',
+        'email_md5',
+        'link',
+        'content',
+        'is_admin',
+        'is_hidden',
+        'reply',
+      ])
+      .exec();
 
     if (!comment) {
       throw new NotFoundException('评论未找到');
@@ -80,6 +117,19 @@ export class CommentsService {
     return {
       code: 200,
       message: '删除成功',
+    };
+  }
+
+  async adminUpdate() {
+    const comments = await this.commentModel.find().exec();
+
+    for (const comment of comments) {
+      await comment.updateOne({ reply: comment.relpy });
+    }
+
+    return {
+      code: 200,
+      message: '更新成功',
     };
   }
 }

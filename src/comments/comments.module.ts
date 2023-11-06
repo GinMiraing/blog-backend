@@ -1,5 +1,6 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthMiddleware } from 'src/auth/auth.middleware';
 
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';

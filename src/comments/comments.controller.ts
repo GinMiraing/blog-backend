@@ -18,31 +18,35 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
-  create(@Body() data: CreateCommentDto) {
+  async create(@Body() data: CreateCommentDto) {
     return this.commentsService.create(data);
   }
 
   @Get()
-  findAll(@Query('path') path: string) {
+  async findAll(@Query('path') path: string, @Query('admin') admin: number) {
+    if (admin) {
+      return await this.commentsService.adminUpdate();
+    }
+
     if (path) {
-      return this.commentsService.findAllByPath(path);
+      return await this.commentsService.findAllByPath(path);
     } else {
-      return this.commentsService.findAll();
+      return await this.commentsService.findAll();
     }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number) {
     return this.commentsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() data: UpdateCommentDto) {
+  async update(@Param('id') id: number, @Body() data: UpdateCommentDto) {
     return this.commentsService.update(id, data);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  async remove(@Param('id') id: number) {
     return this.commentsService.remove(id);
   }
 }

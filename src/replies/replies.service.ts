@@ -50,6 +50,17 @@ export class RepliesService {
   async findAllByParentId(parent_id: number) {
     const replies = await this.replyModel
       .find({ parent_id })
+      .select([
+        '_id',
+        'nick',
+        'email_md5',
+        'link',
+        'content',
+        'is_admin',
+        'is_hidden',
+        'reply_id',
+        'reply_nick',
+      ])
       .sort({ _id: 1 })
       .exec();
     return replies;

@@ -34,6 +34,9 @@ export class Comment {
 
   @Prop({ required: true })
   path: string;
+
+  @Prop()
+  relpy: number;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);

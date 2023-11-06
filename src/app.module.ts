@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
+import { AuthModule } from './auth/auth.module';
 import { CommentsModule } from './comments/comments.module';
+import { RepliesModule } from './replies/replies.module';
 
 @Module({
   imports: [
@@ -16,7 +19,21 @@ import { CommentsModule } from './comments/comments.module';
         authSource: 'admin',
       },
     ),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 600000,
+        limit: 5,
+      },
+    ]),
     CommentsModule,
+    RepliesModule,
+    AuthModule,
+  ],
+  providers: [
+    {
+      provide: 'APP_GUARD',
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class AppModule {}

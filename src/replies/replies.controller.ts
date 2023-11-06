@@ -18,12 +18,12 @@ export class RepliesController {
   constructor(private readonly repliesService: RepliesService) {}
 
   @Post()
-  create(@Body() data: CreateReplyDto) {
+  async create(@Body() data: CreateReplyDto) {
     return this.repliesService.create(data);
   }
 
   @Get()
-  findAll(@Query('parent_id') parent_id: number) {
+  async findAll(@Query('parent_id') parent_id: number) {
     if (!parent_id) {
       return this.repliesService.findAll();
     } else {
@@ -32,17 +32,17 @@ export class RepliesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number) {
     return this.repliesService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() data: UpdateReplyDto) {
+  async update(@Param('id') id: number, @Body() data: UpdateReplyDto) {
     return this.repliesService.update(id, data);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  async remove(@Param('id') id: number) {
     return this.repliesService.remove(id);
   }
 }
