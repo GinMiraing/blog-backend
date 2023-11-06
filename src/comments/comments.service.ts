@@ -119,17 +119,4 @@ export class CommentsService {
       message: '删除成功',
     };
   }
-
-  async adminUpdate() {
-    const comments = await this.commentModel.find().exec();
-
-    for (const comment of comments) {
-      await comment.updateOne({ reply: comment.relpy });
-    }
-
-    return {
-      code: 200,
-      message: '更新成功',
-    };
-  }
 }

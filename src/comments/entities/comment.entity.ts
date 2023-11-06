@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type CommentDocument = HydratedDocument<Comment>;
 
-@Schema({ versionKey: false, collection: 'maincomments', timestamps: false })
+@Schema({ versionKey: false, collection: 'comments', timestamps: false })
 export class Comment {
   @Prop({ default: Date.now() })
   _id: number;
@@ -34,9 +34,6 @@ export class Comment {
 
   @Prop({ required: true })
   path: string;
-
-  @Prop()
-  relpy: number;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);

@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type ReplyDocument = HydratedDocument<Reply>;
 
-@Schema({ versionKey: false, collection: 'replycomments', timestamps: false })
+@Schema({ versionKey: false, collection: 'replies', timestamps: false })
 export class Reply {
   @Prop({ default: Date.now() })
   _id: number;

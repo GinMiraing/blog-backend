@@ -24,6 +24,8 @@ export class RepliesService {
       throw new NotFoundException('被回复评论未找到');
     }
 
+    await repliedComment.updateOne({ $inc: { reply: 1 } });
+
     const createdComment = new this.replyModel({
       _id: Date.now(),
       nick,
