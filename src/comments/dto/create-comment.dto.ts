@@ -1,10 +1,4 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUrl,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateCommentDto {
   @IsString()
@@ -15,7 +9,6 @@ export class CreateCommentDto {
   email: string;
 
   @IsString()
-  @IsUrl()
   @IsOptional()
   link: string;
 

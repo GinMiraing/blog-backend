@@ -4,7 +4,6 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  IsUrl,
 } from 'class-validator';
 
 export class CreateReplyDto {
@@ -16,7 +15,6 @@ export class CreateReplyDto {
   email: string;
 
   @IsString()
-  @IsUrl()
   @IsOptional()
   link: string;
 
