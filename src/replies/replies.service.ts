@@ -18,13 +18,25 @@ export class RepliesService {
   async create(data: CreateReplyDto) {
     const { nick, email, link, content, parent_id, reply_id } = data;
 
-    const repliedComment = await this.commentModel.findById(reply_id).exec();
+    const parentComment = await this.commentModel.findById(parent_id).exec();
+
+    if (!parentComment) {
+      throw new NotFoundException('父评论未找到');
+    }
+
+    await parentComment.updateOne({ $inc: { reply: 1 } });
+
+    let repliedComment = null;
+
+    if (parent_id === reply_id) {
+      repliedComment = parentComment;
+    } else {
+      repliedComment = await this.replyModel.findById(reply_id).exec();
+    }
 
     if (!repliedComment) {
       throw new NotFoundException('被回复评论未找到');
     }
-
-    await repliedComment.updateOne({ $inc: { reply: 1 } });
 
     const createdComment = new this.replyModel({
       _id: Date.now(),
@@ -45,7 +57,21 @@ export class RepliesService {
   }
 
   async findAll() {
-    const replies = await this.replyModel.find().sort({ _id: 1 }).exec();
+    const replies = await this.replyModel
+      .find()
+      .select([
+        '_id',
+        'nick',
+        'email_md5',
+        'link',
+        'content',
+        'is_admin',
+        'is_hidden',
+        'reply_id',
+        'reply_nick',
+      ])
+      .sort({ _id: 1 })
+      .exec();
     return replies;
   }
 
