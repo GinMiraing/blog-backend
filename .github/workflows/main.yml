@@ -27,5 +27,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ginmiraing/blogbackend:${{ github.ref_name }}
-            ginmiraing/blogbackend:latest
+            ginmiraing/blog-backend:${{ github.ref_name }}
+            ginmiraing/blog-backend:latest
