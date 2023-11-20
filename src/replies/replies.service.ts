@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { MD5 } from 'crypto-js';
 import { Model } from 'mongoose';
 import { Comment } from 'src/comments/entities/comment.entity';
+import { EmailService } from 'src/email/email.service';
 
 import { CreateReplyDto } from './dto/create-reply.dto';
 import { UpdateReplyDto } from './dto/update-reply.dto';
@@ -13,6 +14,7 @@ export class RepliesService {
   constructor(
     @InjectModel('reply') private replyModel: Model<Reply>,
     @InjectModel('comment') private commentModel: Model<Comment>,
+    private readonly emailService: EmailService,
   ) {}
 
   async create(data: CreateReplyDto) {
@@ -53,7 +55,19 @@ export class RepliesService {
       reply_nick: repliedComment.nick,
     });
 
-    return createdComment.save();
+    await createdComment.save();
+
+    await this.emailService.sendEmail({
+      parentNick: repliedComment.nick,
+      parentAvatar: `https://cravatar.cn/avatar/${repliedComment.email_md5}`,
+      parentContent: repliedComment.content,
+      replyNick: nick,
+      replyAvatar: `https://cravatar.cn/avatar/${MD5(email).toString()}`,
+      replyContent: content,
+      url: `https://blog.zengjunyin.com${repliedComment.path}`,
+    });
+
+    return createdComment;
   }
 
   async findAll() {
