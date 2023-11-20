@@ -7,6 +7,7 @@ import {
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthMiddleware } from 'src/auth/auth.middleware';
 import { CommentSchema } from 'src/comments/entities/comment.entity';
+import { EmailModule } from 'src/email/email.module';
 
 import { ReplySchema } from './entities/reply.entity';
 import { RepliesController } from './replies.controller';
@@ -18,6 +19,7 @@ import { RepliesService } from './replies.service';
       { name: 'reply', schema: ReplySchema },
       { name: 'comment', schema: CommentSchema },
     ]),
+    EmailModule,
   ],
   controllers: [RepliesController],
   providers: [RepliesService],
