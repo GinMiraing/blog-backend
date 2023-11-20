@@ -11,6 +11,7 @@ export class EmailService {
     replyAvatar,
     replyContent,
     url,
+    address,
   }: {
     parentNick: string;
     parentAvatar: string;
@@ -19,6 +20,7 @@ export class EmailService {
     replyAvatar: string;
     replyContent: string;
     url: string;
+    address: string;
   }) {
     try {
       const transport = createTransport({
@@ -33,8 +35,8 @@ export class EmailService {
 
       await transport.sendMail({
         from: process.env.SMTP_USER || '123456@qq.com',
-        to: 'zengjunyin@foxmail.com',
-        subject: '测试邮件',
+        to: address,
+        subject: '评论回复通知 - 胤的博客',
         html: `
         <div>
             <div style="display: flex; position: relative; width: 100%; height: 206px; background: #ef859d2e; top: 0; left: 0; justify-content: center;">

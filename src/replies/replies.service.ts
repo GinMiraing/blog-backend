@@ -65,6 +65,7 @@ export class RepliesService {
       replyAvatar: `https://cravatar.cn/avatar/${MD5(email).toString()}`,
       replyContent: content,
       url: `https://blog.zengjunyin.com${repliedComment.path}`,
+      address: email,
     });
 
     return createdComment;
