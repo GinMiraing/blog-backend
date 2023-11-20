@@ -49,7 +49,7 @@ export class EmailService {
                 </div>
                 <div style="margin: 0 20px; min-height: 128px; background: #F7F7F7; border-radius: 12px; margin-top: 34px; display: flex; flex-direction: column; align-items: flex-start; padding: 32px 16px; width: calc(100% - 40px);">
                     <div style="display: flex; margin-left: 30px; margin-bottom: 16px; align-items: center">
-                        <div style="background-image: url('${parentAvatar}'); border-radius: 10px; width: 50px; height: 50px; background-size: cover;"></div>
+                        <div style="background-image: url('${parentAvatar}'); flex-shrink: 0; border-radius: 10px; width: 50px; height: 50px; background-size: cover;"></div>
                         <div style="display: flex; flex-direction: column; margin-left: 30px;">
                             <span style="height: 22px; font-size: 16px; font-weight: bold; color: #C5343E; line-height: 22px;">${parentNick}</span>
                             <span style="margin-top: 6px; margin-right: 22px; font-size: 16px; font-weight: 400; color: #000000; line-height: 22px;">${parentContent}</span>
@@ -57,7 +57,7 @@ export class EmailService {
                     </div>
                     <hr style="display: flex; position: relative; border: 1px dashed #ef859d2e; box-sizing: content-box; height: 0px; overflow: visible; width: 100%;">
                     <div style="display: flex; margin-left: 30px; margin-top: 16px; align-items: center">
-                        <div style="background-image: url('${replyAvatar}'); border-radius: 10px; width: 50px; height: 50px; background-size: cover;"></div>
+                        <div style="background-image: url('${replyAvatar}'); flex-shrink: 0; border-radius: 10px; width: 50px; height: 50px; background-size: cover;"></div>
                         <div style="display: flex; flex-direction: column; margin-left: 30px;">
                             <span style="height: 22px; font-size: 16px; font-weight: bold; color: #C5343E; line-height: 22px;">${replyNick}</span>
                             <span style="margin-top: 6px; margin-right: 22px; font-size: 16px; font-weight: 400; color: #000000; line-height: 22px;">${replyContent}</span>
