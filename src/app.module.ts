@@ -5,6 +5,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 import { AuthModule } from './auth/auth.module';
 import { CommentsModule } from './comments/comments.module';
+import { EmailModule } from './email/email.module';
 import { RepliesModule } from './replies/replies.module';
 
 @Module({
@@ -28,6 +29,7 @@ import { RepliesModule } from './replies/replies.module';
     CommentsModule,
     RepliesModule,
     AuthModule,
+    EmailModule,
   ],
   providers: [
     {
