@@ -2,15 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { MD5 } from 'crypto-js';
 import { Model } from 'mongoose';
-import { Comment } from 'src/comments/entities/comment.entity';
+import { Comment } from 'src/comment/entities/comment.entity';
 import { EmailService } from 'src/email/email.service';
 
 import { CreateReplyDto } from './dto/create-reply.dto';
-import { UpdateReplyDto } from './dto/update-reply.dto';
 import { Reply } from './entities/reply.entity';
 
 @Injectable()
-export class RepliesService {
+export class ReplyService {
   constructor(
     @InjectModel('reply') private replyModel: Model<Reply>,
     @InjectModel('comment') private commentModel: Model<Comment>,
@@ -41,14 +40,12 @@ export class RepliesService {
     }
 
     const createdComment = new this.replyModel({
-      _id: Date.now(),
       nick,
       email,
       email_md5: MD5(email).toString(),
       link,
       content,
       is_admin: link === 'https://blog.zengjunyin.com',
-      is_hidden: false,
       path: repliedComment.path,
       parent_id,
       reply_id,
@@ -71,27 +68,8 @@ export class RepliesService {
     return createdComment;
   }
 
-  async findAll() {
-    const replies = await this.replyModel
-      .find()
-      .select([
-        '_id',
-        'nick',
-        'email_md5',
-        'link',
-        'content',
-        'is_admin',
-        'is_hidden',
-        'reply_id',
-        'reply_nick',
-      ])
-      .sort({ _id: 1 })
-      .exec();
-    return replies;
-  }
-
-  async findAllByParentId(parent_id: number) {
-    const replies = await this.replyModel
+  async findByParentId(parent_id: number) {
+    return await this.replyModel
       .find({ parent_id })
       .select([
         '_id',
@@ -106,46 +84,5 @@ export class RepliesService {
       ])
       .sort({ _id: 1 })
       .exec();
-    return replies;
-  }
-
-  async findOne(id: number) {
-    const reply = await this.replyModel.findById(id).exec();
-
-    if (!reply) {
-      throw new NotFoundException('回复未找到');
-    }
-
-    return reply;
-  }
-
-  async update(id: number, data: UpdateReplyDto) {
-    const reply = await this.replyModel.findById(id).exec();
-
-    if (!reply) {
-      throw new NotFoundException('回复未找到');
-    }
-
-    await reply.updateOne(data);
-
-    return {
-      code: 200,
-      message: '更新成功',
-    };
-  }
-
-  async remove(id: number) {
-    const reply = await this.replyModel.findById(id).exec();
-
-    if (!reply) {
-      throw new NotFoundException('回复未找到');
-    }
-
-    await reply.deleteOne();
-
-    return {
-      code: 200,
-      message: '删除成功',
-    };
   }
 }

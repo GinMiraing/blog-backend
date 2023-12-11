@@ -4,9 +4,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 import { AuthModule } from './auth/auth.module';
-import { CommentsModule } from './comments/comments.module';
+import { CommentModule } from './comment/comment.module';
 import { EmailModule } from './email/email.module';
-import { RepliesModule } from './replies/replies.module';
+import { ReplyModule } from './reply/reply.module';
 
 @Module({
   imports: [
@@ -26,8 +26,8 @@ import { RepliesModule } from './replies/replies.module';
         limit: 5,
       },
     ]),
-    CommentsModule,
-    RepliesModule,
+    CommentModule,
+    ReplyModule,
     AuthModule,
     EmailModule,
   ],

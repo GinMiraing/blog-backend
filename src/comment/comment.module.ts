@@ -7,18 +7,18 @@ import {
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthMiddleware } from 'src/auth/auth.middleware';
 
-import { CommentsController } from './comments.controller';
-import { CommentsService } from './comments.service';
+import { CommentController } from './comment.controller';
+import { CommentService } from './comment.service';
 import { CommentSchema } from './entities/comment.entity';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'comment', schema: CommentSchema }]),
   ],
-  controllers: [CommentsController],
-  providers: [CommentsService],
+  controllers: [CommentController],
+  providers: [CommentService],
 })
-export class CommentsModule implements NestModule {
+export class CommentModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
