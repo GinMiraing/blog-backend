@@ -24,7 +24,7 @@ export class ReplyController {
   @Get()
   async findByParentId(@Query('parent_id') parent_id: number) {
     if (!parent_id) {
-      return new BadRequestException('parent_id 错误');
+      throw new BadRequestException('parent_id 错误');
     }
 
     return await this.findByParentId(parent_id);

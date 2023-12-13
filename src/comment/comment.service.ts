@@ -42,26 +42,4 @@ export class CommentService {
       .sort({ _id: -1 })
       .exec();
   }
-
-  async findById(id: number) {
-    const comment = await this.commentModel
-      .findById(id)
-      .select([
-        '_id',
-        'nick',
-        'email_md5',
-        'link',
-        'content',
-        'is_admin',
-        'is_hidden',
-        'reply',
-      ])
-      .exec();
-
-    if (!comment) {
-      return new NotFoundException('评论未找到');
-    }
-
-    return comment;
-  }
 }

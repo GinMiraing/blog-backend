@@ -25,15 +25,9 @@ export class CommentController {
   @Get()
   async findByPath(@Query('path') path: string) {
     if (!path) {
-      return new BadRequestException('path 错误');
+      throw new BadRequestException('path 错误');
     }
 
     return await this.commentService.findByPath(path);
-  }
-
-  @Throttle({ default: { limit: 100, ttl: 60000 } })
-  @Get(':id')
-  async findById(@Param('id') id: number) {
-    return await this.commentService.findById(id);
   }
 }
