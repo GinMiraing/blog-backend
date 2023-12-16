@@ -1,6 +1,16 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateCommentDto {
+  @IsBoolean()
+  is_reply: boolean;
+
   @IsString()
   @IsNotEmpty()
   nick: string;
@@ -17,6 +27,18 @@ export class CreateCommentDto {
   content: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   path: string;
+
+  @IsNumber()
+  @IsOptional()
+  parent_id: number;
+
+  @IsNumber()
+  @IsOptional()
+  reply_id: number;
+
+  @IsString()
+  @IsOptional()
+  reply_nick: string;
 }

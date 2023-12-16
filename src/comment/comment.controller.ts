@@ -7,7 +7,6 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
 
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -18,16 +17,38 @@ export class CommentController {
 
   @Post()
   async create(@Body() data: CreateCommentDto) {
-    return await this.commentService.create(data);
+    await this.commentService.create(data);
+    return {
+      message: 'create comment success',
+      data: null,
+    };
   }
 
-  @Throttle({ default: { limit: 100, ttl: 60000 } })
   @Get()
   async findByPath(@Query('path') path: string) {
     if (!path) {
-      throw new BadRequestException('path 错误');
+      throw new BadRequestException('invalid path');
     }
 
-    return await this.commentService.findByPath(path);
+    const data = await this.commentService.findByPath(path);
+
+    return {
+      message: 'get comments success',
+      data,
+    };
+  }
+
+  @Get(':parent_id')
+  async findByParentId(@Param('parent_id') parent_id: number) {
+    if (!parent_id) {
+      throw new BadRequestException('invalid parent_id');
+    }
+
+    const data = await this.commentService.findByParentId(parent_id);
+
+    return {
+      message: 'get comments success',
+      data,
+    };
   }
 }

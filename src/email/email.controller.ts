@@ -1,5 +1,4 @@
 import { Controller, Get } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
 
 import { EmailService } from './email.service';
 
@@ -7,7 +6,6 @@ import { EmailService } from './email.service';
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 
-  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @Get()
   async sendTestEmail() {
     return this.emailService.sendEmail({

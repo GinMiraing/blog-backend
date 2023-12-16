@@ -1,36 +1,46 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Schema({ versionKey: false, collection: 'comments', timestamps: false })
+@Entity()
 export class Comment {
-  @Prop({ default: Date.now() })
-  _id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Prop({ required: true })
+  @Column({ type: 'varchar', length: 50, default: '' })
   nick: string;
 
-  @Prop({ required: true })
+  @Column({ type: 'varchar', length: 50, default: '' })
   email: string;
 
-  @Prop({ required: true })
+  @Column({ type: 'char', length: 32, default: '' })
   email_md5: string;
 
-  @Prop({ default: '' })
+  @Column({ type: 'varchar', length: 60, default: '' })
   link: string;
 
-  @Prop({ required: true })
+  @Column({ type: 'varchar', default: '' })
   content: string;
 
-  @Prop({ default: false })
+  @Column({ type: 'boolean', default: false })
   is_admin: boolean;
 
-  @Prop({ default: false })
+  @Column({ type: 'boolean', default: false })
   is_hidden: boolean;
 
-  @Prop({ default: 0 })
-  reply: number;
+  @Column({ type: 'bigint', default: 0 })
+  timestamp: number;
 
-  @Prop({ required: true })
+  @Column({ type: 'int', default: 0 })
+  reply_count: number;
+
+  @Column({ type: 'varchar', length: 50, default: '' })
   path: string;
-}
 
-export const CommentSchema = SchemaFactory.createForClass(Comment);
+  @Column({ type: 'int', default: 0 })
+  parent_id: number;
+
+  @Column({ type: 'int', default: 0 })
+  reply_id: number;
+
+  @Column({ type: 'varchar', length: 50, default: '' })
+  reply_nick: string;
+}
