@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -6,7 +7,10 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateReplyDto {
+export class CreateCommentDto {
+  @IsBoolean()
+  is_reply: boolean;
+
   @IsString()
   @IsNotEmpty()
   nick: string;
@@ -22,11 +26,19 @@ export class CreateReplyDto {
   @IsNotEmpty()
   content: string;
 
+  @IsString()
+  @IsOptional()
+  path: string;
+
   @IsNumber()
-  @IsNotEmpty()
+  @IsOptional()
   parent_id: number;
 
   @IsNumber()
-  @IsNotEmpty()
+  @IsOptional()
   reply_id: number;
+
+  @IsString()
+  @IsOptional()
+  reply_nick: string;
 }
