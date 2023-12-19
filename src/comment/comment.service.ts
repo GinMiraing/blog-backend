@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MD5 } from 'crypto-js';
 import { EmailService } from 'src/email/email.service';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { Comment } from './entities/comment.entity';
