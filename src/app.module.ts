@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentModule } from './comment/comment.module';
 import { Comment } from './comment/entities/comment.entity';
 import { EmailModule } from './email/email.module';
+import { Post } from './post/entities/post.entity';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -16,11 +18,12 @@ import { EmailModule } from './email/email.module';
       username: process.env.MYSQL_USER || 'root',
       password: process.env.MYSQL_PASSWORD || 'password',
       database: process.env.MYSQL_DATABASE || 'default',
-      entities: [Comment],
+      entities: [Comment, Post],
       synchronize: false,
     }),
     CommentModule,
     EmailModule,
+    PostModule,
   ],
 })
 export class AppModule {}
