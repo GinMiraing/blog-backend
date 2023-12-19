@@ -15,12 +15,12 @@ export class PostController {
 
   @Get()
   async findAll(
-    @Query('first_id') firstId: number,
+    @Query('page') page: number,
     @Query('limit') limit: number,
     @Query('category') category: string,
   ) {
     const data = await this.postService.findAll({
-      firstId,
+      page,
       limit: limit || 10,
       category,
     });

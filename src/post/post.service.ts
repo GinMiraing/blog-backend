@@ -12,11 +12,11 @@ export class PostService {
   ) {}
 
   async findAll({
-    firstId,
+    page,
     limit,
     category,
   }: {
-    firstId?: number;
+    page?: number;
     limit: number;
     category?: string;
   }) {
@@ -31,13 +31,13 @@ export class PostService {
       ],
       where: {
         is_hidden: false,
-        id: firstId ? LessThanOrEqual(firstId) : undefined,
         category,
       },
       order: {
         id: 'DESC',
       },
       take: limit,
+      skip: page ? (page - 1) * limit : 0,
     });
 
     const total = await this.postRepository.count();
