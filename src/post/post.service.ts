@@ -40,7 +40,9 @@ export class PostService {
       take: limit,
     });
 
-    return { posts: data, total: data.length };
+    const total = await this.postRepository.count();
+
+    return { posts: data, total };
   }
 
   async findOneById(id: number) {
