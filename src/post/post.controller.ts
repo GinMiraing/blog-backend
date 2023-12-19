@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
 } from '@nestjs/common';
 
 import { PostService } from './post.service';
@@ -13,8 +14,16 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Get()
-  async findAll() {
-    const data = await this.postService.findAll();
+  async findAll(
+    @Query('first_id') firstId: number,
+    @Query('limit') limit: number,
+    @Query('category') category: string,
+  ) {
+    const data = await this.postService.findAll({
+      firstId,
+      limit: limit || 10,
+      category,
+    });
 
     return {
       message: 'get posts success',
