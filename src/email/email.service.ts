@@ -45,7 +45,7 @@ export class EmailService {
           <div style="margin-top: 92px; display: flex; flex-direction: column; align-items: center;">
             <div style="display: flex; flex-direction: column; align-items: center; margin: 0 20px;">
               <span style="font-size: 26px; font-weight: bold; color: #000000; line-height: 37px; text-align: center;">嘿 ${parentNick}！您在 ${'胤的博客'} 中收到一条新回复！</span>
-              <span style="font-size: 16px; font-weight: bold; color: #00000030; line-height: 22px; margin-top: 21px; text-align: center;">您之前在 ${'胤的博客'} 中的评论收到来自 ${parentNick} 的回复</span>
+              <span style="font-size: 16px; font-weight: bold; color: #00000030; line-height: 22px; margin-top: 21px; text-align: center;">您之前在 ${'胤的博客'} 中的评论收到来自 ${replyNick} 的回复</span>
             </div>
             <div style="margin: 0 20px; min-height: 128px; background: #F7F7F7; border-radius: 12px; margin-top: 34px; display: flex; flex-direction: column; align-items: flex-start; padding: 32px 16px; width: calc(100% - 40px);">
               <div style="display: flex; margin-left: 30px; margin-bottom: 16px;">
