@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThanOrEqual, Repository } from 'typeorm';
 
 import { Post } from './entities/post.entity';
 
@@ -11,7 +11,15 @@ export class PostService {
     private postRepository: Repository<Post>,
   ) {}
 
-  async findAll() {
+  async findAll({
+    firstId,
+    limit,
+    category,
+  }: {
+    firstId?: number;
+    limit: number;
+    category?: string;
+  }) {
     const data = await this.postRepository.find({
       select: [
         'id',
@@ -23,13 +31,16 @@ export class PostService {
       ],
       where: {
         is_hidden: false,
+        id: firstId ? LessThanOrEqual(firstId) : undefined,
+        category,
       },
       order: {
         id: 'DESC',
       },
+      take: limit,
     });
 
-    return data;
+    return { posts: data, total: data.length };
   }
 
   async findOneById(id: number) {
